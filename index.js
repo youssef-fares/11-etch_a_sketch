@@ -4,40 +4,52 @@ const input = document.querySelector("input");
 const button = document.querySelector("button");
 
 button.addEventListener("click", function () {
-  // if(Number.isInteger(input.value)){
-  let squarePerSide = input.value;
-  let gridSize = squarePerSide * squarePerSide;
-  // }
+  if (Number.isInteger(parseInt(input.value)) && input.value <= 100) {
+    let squarePerSide = input.value;
+    let gridSize = squarePerSide * squarePerSide;
+    // }
+    let dim = 800 / squarePerSide;
+    console.log(dim);
 
-  gridContainer.style.gridTemplateRows =
-    "repeat(" + squarePerSide + ", calc(2vw + 5px))";
-  gridContainer.style.gridTemplateColumns =
-    "repeat(" + squarePerSide + ", calc(2vw + 5px))";
+    clearBox("grid");
 
-  //   existing grid should be removed before creating new one !!
+    gridContainer.style.gridTemplateRows =
+      "repeat(" + squarePerSide + ", " + dim + "px";
+    gridContainer.style.gridTemplateColumns =
+      "repeat(" + squarePerSide + ", " + dim + "px";
 
-  for (i = 0; i < gridSize; i++) {
-    const content = document.createElement("div");
-    content.classList.add("content");
-    content.textContent = " ";
-    content.style.border = "solid 1px gray";
+    //   existing grid should be removed before creating new one !!
 
-    gridContainer.appendChild(content);
-  }
+    for (i = 0; i < gridSize; i++) {
+      const content = document.createElement("div");
+      content.classList.add("content");
+      content.textContent = " ";
+      content.style.border = "solid 1px gray";
 
-  const contents = document.querySelectorAll(".content");
+      gridContainer.appendChild(content);
+    }
 
-  contents.forEach((content) => {
-    content.addEventListener("mouseover", (event) => {
-      let rgbRed = Math.floor(Math.random() * 256);
-      let rgbGreen = Math.floor(Math.random() * 256);
-      let rgbBlue = Math.floor(Math.random() * 256);
-      let rgb = "rgb(" + rgbRed + "," + rgbGreen + "," + rgbBlue + ")";
+    const contents = document.querySelectorAll(".content");
 
-      event.target.style.backgroundColor = rgb;
+    contents.forEach((content) => {
+      content.addEventListener("mouseover", (event) => {
+        let rgbRed = Math.floor(Math.random() * 256);
+        let rgbGreen = Math.floor(Math.random() * 256);
+        let rgbBlue = Math.floor(Math.random() * 256);
+        let rgb = "rgb(" + rgbRed + "," + rgbGreen + "," + rgbBlue + ")";
+
+        event.target.style.backgroundColor = rgb;
+      });
     });
-  });
+  } else {
+    alert("Enter a number from 1 to 100");
+  }
 });
 
-// addEventListener("mouseover", (event) => {});
-// content.style.backgroundColor="rgb(241,111,222)"
+function clearBox(elementID) {
+  var div = document.getElementById(elementID);
+
+  while (div.firstChild) {
+    div.removeChild(div.firstChild);
+  }
+}
